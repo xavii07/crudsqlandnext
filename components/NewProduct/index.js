@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 const initialStateForm = { name: "", price: "", descriprion: "" }
 
@@ -41,14 +42,19 @@ const NewProductForm = () => {
       return
     }
 
-    if (router.query.id) {
-      await axios.put(`/api/products/${router.query.id}`, { name, price, description })
-    } else {
-      await axios.post("/api/products", { name, price, description })
+    try {
+      if (router.query.id) {
+        await axios.put(`/api/products/${router.query.id}`, { name, price, description })
+        toast.info("Product edited succesfull")
+      } else {
+        await axios.post("/api/products", { name, price, description })
+        toast.success("Product saved succesfull")
+      }
+      setInfoProduct(initialStateForm)
+      router.push("/products")
+    } catch (error) {
+      toast.error(error.response.data.message)
     }
-
-    setInfoProduct(initialStateForm)
-    router.push("/products")
   }
 
   return (

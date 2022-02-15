@@ -1,14 +1,19 @@
 import axios from 'axios'
 import Card from '../../components/Card'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 const InfoProduct = ({ product }) => {
   const { id, created_at: createdAt } = product
   const router = useRouter()
 
   const handleDelete = async (id) => {
-    await axios.delete(`/api/products/${id}`)
-    router.push("/products")
+    try {
+      await axios.delete(`/api/products/${id}`)
+      router.push("/products")
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
   }
 
   const handleEdit = async (id) => {

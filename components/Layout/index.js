@@ -1,4 +1,5 @@
 import React from 'react'
+import { ToastContainer } from 'react-toastify'
 import Header from '../Header'
 
 const Layout = ({ children }) => {
@@ -6,6 +7,7 @@ const Layout = ({ children }) => {
       <>
         <Header />
         <div className='container mx-auto'>{children}</div>
+        <ToastContainer />
       </>
   )
 }

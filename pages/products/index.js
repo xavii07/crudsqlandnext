@@ -23,7 +23,6 @@ export default Products
 
 export async function getServerSideProps (context) {
   const { data: products } = await axios.get("http://localhost:3000/api/products")
-
   return {
     props: { products }
   }
